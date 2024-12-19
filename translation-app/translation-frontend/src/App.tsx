@@ -58,12 +58,12 @@ function App() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="text" className="w-full space-y-6">
-              <TabsList className="w-full flex justify-between space-x-2 p-1">
-                <TabsTrigger value="text" className="flex-1">Text Translation</TabsTrigger>
-                <TabsTrigger value="image" className="flex-1">Image Translation</TabsTrigger>
-                <TabsTrigger value="voice" className="flex-1">Voice Translation</TabsTrigger>
-                <TabsTrigger value="document" className="flex-1">Document Translation</TabsTrigger>
-                <TabsTrigger value="webpage" className="flex-1">Webpage Translation</TabsTrigger>
+              <TabsList className="w-full flex justify-between space-x-4 p-2 py-3">
+                <TabsTrigger value="text" className="flex-1 px-4 py-2">Text Translation</TabsTrigger>
+                <TabsTrigger value="image" className="flex-1 px-4 py-2">Image Translation</TabsTrigger>
+                <TabsTrigger value="voice" className="flex-1 px-4 py-2">Voice Translation</TabsTrigger>
+                <TabsTrigger value="document" className="flex-1 px-4 py-2">Document Translation</TabsTrigger>
+                <TabsTrigger value="webpage" className="flex-1 px-4 py-2">Webpage Translation</TabsTrigger>
               </TabsList>
               <TabsContent value="text">
                 <div className="flex flex-col gap-6">
