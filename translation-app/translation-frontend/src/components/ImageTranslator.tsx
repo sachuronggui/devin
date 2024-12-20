@@ -9,11 +9,15 @@ interface ImageTranslatorProps {
 }
 
 const ImageTranslator = ({ className }: ImageTranslatorProps) => {
-  const [sourceLang, setSourceLang] = useState('en');
-  const [targetLang, setTargetLang] = useState('zh-CN');
+  const [sourceLang, setSourceLang] = useState('auto');  // Changed from 'en'
+  const [targetLang, setTargetLang] = useState('en');    // Changed from 'zh-CN'
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [translatedImageUrl, setTranslatedImageUrl] = useState<string | null>(null);
+  const [extractedText, setExtractedText] = useState('');
+  const [translatedText, setTranslatedText] = useState('');
+  const [hoveredBox, setHoveredBox] = useState<number | null>(null);
+  const [textBoxes, setTextBoxes] = useState<Array<{left: number, top: number, width: number, height: number}>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -58,6 +62,9 @@ const ImageTranslator = ({ className }: ImageTranslatorProps) => {
 
       // Update to handle translated image URL
       setTranslatedImageUrl(data.translated_image_url);
+      setExtractedText(data.original_text.join('\n'));
+      setTranslatedText(data.translated_text.join('\n'));
+      setTextBoxes(data.text_boxes);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Translation failed');
       setTranslatedImageUrl(null);
@@ -75,6 +82,7 @@ const ImageTranslator = ({ className }: ImageTranslatorProps) => {
               value={sourceLang}
               onChange={setSourceLang}
               label="Source Language"
+              isSourceLanguage={true}
             />
             <LanguageSelector
               value={targetLang}
@@ -142,6 +150,25 @@ const ImageTranslator = ({ className }: ImageTranslatorProps) => {
                   </>
                 )}
               </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label className="text-sm font-medium mb-2">Extracted Text</label>
+              <textarea
+                value={extractedText}
+                readOnly
+                className="w-full h-32 p-2 border rounded resize-none"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm font-medium mb-2">Translated Text</label>
+              <textarea
+                value={translatedText}
+                readOnly
+                className="w-full h-32 p-2 border rounded resize-none"
+              />
             </div>
           </div>
         </div>
