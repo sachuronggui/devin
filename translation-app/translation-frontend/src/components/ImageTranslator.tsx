@@ -48,7 +48,7 @@ const ImageTranslator = ({ className }: ImageTranslatorProps) => {
     formData.append('target_lang', targetLang);
 
     try {
-      const response = await fetch('http://localhost:8000/translate-image', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/translate-image`, {
         method: 'POST',
         body: formData,
       });
