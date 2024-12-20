@@ -4,10 +4,12 @@ interface LanguageSelectorProps {
   value: string;
   onChange: (value: string) => void;
   label: string;
+  isSourceLanguage?: boolean; // New prop to determine if this is source language selector
 }
 
-const LanguageSelector = ({ value, onChange, label }: LanguageSelectorProps) => {
+const LanguageSelector = ({ value, onChange, label, isSourceLanguage = false }: LanguageSelectorProps) => {
   const languages = {
+    ...(isSourceLanguage ? { "auto": "Auto Detect" } : {}),
     "en": "English",
     "zh-CN": "Chinese (Simplified)",
     "zh-TW": "Chinese (Traditional)",

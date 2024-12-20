@@ -76,7 +76,7 @@ async def translate_text(request: TranslationRequest):
 async def translate_image(
     image: UploadFile = File(...),
     source_lang: str = Form(...),
-    target_lang: str = Form(...)
+    target_lang: str = Form('en')  # Default to English if not specified
 ):
     try:
         logger.info(f"Processing image translation from {source_lang} to {target_lang}")
@@ -153,9 +153,14 @@ async def translate_image(
         filepath = os.path.join(UPLOAD_DIR, filename)
         translated_img.save(filepath, "PNG")
 
-        # Return the URL for the translated image
+        # Return the URL for the translated image and text data
         image_url = f"/images/{filename}"
-        return {"translated_image_url": image_url}
+        return {
+            "translated_image_url": image_url,
+            "original_text": text_to_translate,
+            "translated_text": translated_texts,
+            "text_boxes": boxes
+        }
 
     except Exception as e:
         logger.error(f"Image translation error: {str(e)}")
